@@ -59,8 +59,6 @@ storyButton.addEventListener("click", function () {
 });
 
 
-
-
 /* 3. Hidden Easter egg */
 const secretTitle = document.getElementById("secretTitle");
 const secretMessage = document.getElementById("secretMessage");
@@ -74,10 +72,9 @@ secretTitle.addEventListener("click", function () {
         secretMessage.hidden = false;
         secretMessage.textContent =
             "🌟 SECRET UNLOCKED: Pip says you're made of stardust and excellent dreams! 🌙";
-
-        secretTitle.textContent = "You found Pip's secret! ✨";
     }
 });
+
 
 
 /* 4. Interactive dream constellation */
