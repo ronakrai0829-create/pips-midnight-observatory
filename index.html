@@ -5,201 +5,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pip's Midnight Observatory</title>
+    <meta name="description" content="A sleepy baby Dream Engineer, a music box, a constellation, a guestbook and one hidden secret. Welcome to Pip's Midnight Observatory.">
+    <meta property="og:title" content="Pip's Midnight Observatory">
+    <meta property="og:description" content="Tiny dreams, sleepy stars, and little inventions from the Midnight Nursery.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
+ 
+<a class="skip-link" href="#main">Skip to content</a>
+ 
+<button id="soundToggle" class="sound-toggle" type="button" aria-pressed="true">🔊 Sound on</button>
+ 
 <header class="hero">
-    <p class="hero-label">✦ A LITTLE MAGIC AFTER DARK ✦</p>
-
+    <p class="hero-label">✦ A LITTLE MAGIC AFTER DARK ✦ <span class="blink">NEW!</span></p>
+ 
     <h1 id="secretTitle">
         Welcome to Pip's
         <span>Midnight Observatory</span>
     </h1>
-
+ 
     <p id="secretMessage" hidden></p>
-
+ 
     <p class="hero-description">
         Tiny dreams, sleepy stars, and little inventions
         made with a whole lot of imagination.
     </p>
-
+ 
     <div class="hero-buttons">
         <a class="hero-button primary-button" href="#projects">
             ✨ Explore the Dream Workshop
         </a>
-
+ 
         <a class="hero-button secondary-button" href="#origin">
             🌙 Discover Pip's Story
         </a>
     </div>
 </header>
-
-
-    <main>
-        <section>
-     
-<section>
-    <img
-        src="images/pip_avatar_cloud.webp"
-        alt="Pip, the sleepy dream engineer"
-        class="pip-image"
-    >
-
-    <h2>Hey, I'm Pip!</h2>
-
-    <p>
-        I'm a Junior Dream Engineer at Midnight Nursery.
-        I turn sleepy thoughts into magical dreams.
-    </p>
-
-    <button id="dreamButton">Make a little magic</button>
-
-    <p id="message" aria-live="polite"></p>
-</section>
-
-        </section>
-        
-<section class="projects" id="projects">
-    <h2>Pip's Dream Workshop</h2>
-    <p class="section-intro">
-        Three little inventions from the Midnight Nursery.
-    </p>
-
-    <div class="project-grid">
-
-        <article class="project-card">
-            <span class="project-icon">🎵</span>
-            <h3>Lullaby Lab</h3>
-            <p>
-                A magical sound machine that turns
-                restless nights into peaceful dreams.
-            </p>
-            <span class="project-tag">Sound Design</span>
-        </article>
-
-        <article class="project-card">
-            <span class="project-icon">🌙</span>
-            <h3>Nightlight Constellations</h3>
-            <p>
-                Tiny star patterns that transform
-                a dark bedroom into a cozy galaxy.
-            </p>
-            <span class="project-tag">Light & Wonder</span>
-        </article>
-
-        <article class="project-card">
-            <span class="project-icon">📬</span>
-            <h3>Dream Delivery</h3>
-            <p>
-                A midnight mail service delivering
-                happy dreams to sleepy little minds.
-            </p>
-            <span class="project-tag">Dream Logistics</span>
-        </article>
-
-    </div>
-</section>
-
-
-<section class="constellation" id="constellation">
-    <p class="hero-label">✦ A SECRET HIDES IN EVERY STAR ✦</p>
-    <h2>Pip's Dream Constellation</h2>
-    <p class="section-intro">
-        Tap a star to discover a tiny message from the Midnight Nursery.
-    </p>
-
-    <div class="star-map" aria-label="Interactive dream stars">
-        <button class="dream-star star-one" data-message="🌙 Even the longest night ends with a sunrise.">
-            ✦
-        </button>
-        <button class="dream-star star-two" data-message="💗 You are someone's favourite kind of magic.">
-            ✧
-        </button>
-        <button class="dream-star star-three" data-message="✨ Small steps can lead to extraordinary dreams.">
-            ★
-        </button>
-        <button class="dream-star star-four" data-message="☁️ Rest is part of the adventure, little dreamer.">
-            ✦
-        </button>
-        <button class="dream-star star-five" data-message="🌟 Keep being curious. The universe loves questions.">
-            ✧
-        </button>
-        <div class="star-map-center">🌙</div>
-    </div>
-
-    <p id="starMessage" class="star-message" aria-live="polite">
-        Choose a star, little dreamer...
-    </p>
-</section>
-
-
-<section class="guestbook" id="guestbook">
-    <p class="hero-label">✦ NOTES FROM DREAMERS ✦</p>
-    <h2>Leave Pip a Little Note 💌</h2>
-
-    <p class="section-intro">
-        Send a kind thought to the Midnight Nursery.
-    </p>
-
-    <form id="guestbookForm">
-        <label for="guestName">Your name</label>
-        <input
-            id="guestName"
-            name="guestName"
-            type="text"
-            maxlength="30"
-            placeholder="Little Dreamer"
-            required
+ 
+<div class="ticker" aria-hidden="true">
+    <span>✦ welcome to pip's midnight observatory ✦ please sign the guestbook ✦ tap every star for a surprise ✦ best viewed at 800x600 ✦ now with 100% more lullabies ✦</span>
+</div>
+ 
+<main id="main">
+ 
+    <section class="panel intro" id="meet">
+        <img
+            src="images/pip_avatar_cloud.webp"
+            alt="Pip, the sleepy dream engineer"
+            class="pip-image"
         >
-
-        <label for="guestMessage">Your message</label>
-        <textarea
-            id="guestMessage"
-            name="guestMessage"
-            maxlength="180"
-            placeholder="Dear Pip..."
-            rows="3"
-            required
-        ></textarea>
-
-        <button type="submit">Send a little love ✨</button>
-    </form>
-
-    <p id="guestbookStatus" aria-live="polite"></p>
-    <div id="guestbookEntries" class="guestbook-entries"></div>
-</section>
-
-
-
-<section class="origin-story" id="origin">
-    <h2>How Pip Became a Dream Engineer</h2>
-    <p class="section-intro">
-        Every little star has a story. Here's mine.
-    </p>
-
-    <div class="story-card">
-        <div class="story-stars" id="storyIcon">🌧️</div>
-
-        <p class="story-step" id="storyStep">Chapter 1 of 3</p>
-
-        <h3 id="storyTitle">The Sleepless Night</h3>
-
-        <p id="storyText">
-            Once upon a midnight, Pip noticed that
-            the little stars couldn't help everyone sleep.
-            Something magical was missing.
+ 
+        <h2>Hey, I'm Pip!</h2>
+ 
+        <p>
+            I'm a Junior Dream Engineer at Midnight Nursery.
+            I turn sleepy thoughts into magical dreams.
         </p>
-
-        <button id="storyButton">Discover what happened →</button>
+ 
+        <button id="dreamButton" type="button">Make a little magic</button>
+ 
+        <p id="message" aria-live="polite"></p>
+    </section>
+ 
+    <section class="panel origin-story" id="origin">
+        <h2>How Pip Became a Dream Engineer</h2>
+        <p class="section-intro">
+            Every little star has a story. Find the glowing thing in each chapter to keep reading.
+        </p>
+ 
+        <div class="story-card">
+            <div class="story-scene" id="storyScene">
+                <div class="story-stars" id="storyIcon" aria-hidden="true">🌧️</div>
+                <button class="story-object" id="storyObject" type="button" aria-label="Look closer: a fallen star">⭐</button>
+            </div>
+ 
+            <p class="story-step" id="storyStep">Chapter 1 of 3</p>
+ 
+            <h3 id="storyTitle">The Sleepless Night</h3>
+ 
+            <p id="storyText">
+                Once upon a midnight, Pip noticed that
+                the little stars couldn't help everyone sleep.
+                Something magical was missing.
+            </p>
+ 
+            <p class="story-hint" id="storyHint" aria-live="polite">
+                Tap the glowing ⭐ to see what Pip found.
+            </p>
+ 
+            <button id="storyButton" type="button">Discover what happened →</button>
+        </div>
+    </section>
+ 
+    <section class="panel projects" id="projects">
+        <h2>Pip's Dream Workshop</h2>
+        <p class="section-intro">
+            Three little inventions from the Midnight Nursery. Every one of them works. Try them.
+        </p>
+ 
+        <div class="project-grid">
+ 
+            <article class="project-card">
+                <span class="project-icon" aria-hidden="true">🎵</span>
+                <h3>Lullaby Lab</h3>
+                <p>
+                    A magical sound machine that turns
+                    restless nights into peaceful dreams.
+                </p>
+                <div class="music-box" role="group" aria-label="Lullaby Lab music box">
+                    <button class="music-key" type="button" data-note="0" aria-label="Play note 1">♪</button>
+                    <button class="music-key" type="button" data-note="1" aria-label="Play note 2">♪</button>
+                    <button class="music-key" type="button" data-note="2" aria-label="Play note 3">♪</button>
+                    <button class="music-key" type="button" data-note="3" aria-label="Play note 4">♪</button>
+                    <button class="music-key" type="button" data-note="4" aria-label="Play note 5">♪</button>
+                </div>
+                <p class="project-status" id="lullabyMessage" aria-live="polite">Play the keys from left to right.</p>
+                <span class="project-tag">Sound Design</span>
+            </article>
+ 
+            <article class="project-card">
+                <span class="project-icon" aria-hidden="true">🌙</span>
+                <h3>Nightlight Constellations</h3>
+                <p>
+                    Tiny star patterns that transform
+                    a dark bedroom into a cozy galaxy.
+                </p>
+                <button class="card-button" id="nightlightButton" type="button" aria-pressed="false">
+                    Turn on the nightlight
+                </button>
+                <p class="project-status">It turns the whole observatory into night.</p>
+                <span class="project-tag">Light &amp; Wonder</span>
+            </article>
+ 
+            <article class="project-card">
+                <span class="project-icon" aria-hidden="true">📬</span>
+                <h3>Dream Delivery</h3>
+                <p>
+                    A midnight mail service delivering
+                    happy dreams to sleepy little minds.
+                </p>
+                <button class="card-button" id="deliveryButton" type="button">
+                    Deliver me a dream
+                </button>
+                <p class="project-status" id="deliveryOutput" aria-live="polite">Your dream is waiting in the mailbox.</p>
+                <span class="project-tag">Dream Logistics</span>
+            </article>
+ 
+        </div>
+    </section>
+ 
+    <section class="panel constellation" id="constellation">
+        <p class="hero-label">✦ A SECRET HIDES IN EVERY STAR ✦</p>
+        <h2>Pip's Dream Constellation</h2>
+        <p class="section-intro">
+            Tap a star to hear its note and read a message from the Midnight Nursery.
+            Find all five to finish the constellation.
+        </p>
+ 
+        <div class="star-map" aria-label="Interactive dream stars">
+            <svg class="star-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <polyline points="22.8,28 75.2,22 80.2,75 46.8,58 26.8,78 22.8,28"></polyline>
+            </svg>
+            <button class="dream-star star-one" type="button" data-message="🌙 Pip's first lullaby note was this one. Hum along!">
+                ✦
+            </button>
+            <button class="dream-star star-two" type="button" data-message="💗 This star is where Pip keeps the dreams that make people giggle.">
+                ✧
+            </button>
+            <button class="dream-star star-three" type="button" data-message="✨ Pip built the very first dream lantern right under this star.">
+                ★
+            </button>
+            <button class="dream-star star-four" type="button" data-message="☁️ Pip naps on the cloud next to this star. Don't tell the other engineers.">
+                ✦
+            </button>
+            <button class="dream-star star-five" type="button" data-message="🌟 The brightest star is Pip's night-shift buddy. It never sleeps, but it hums.">
+                ✧
+            </button>
+            <div class="star-map-center" aria-hidden="true">🌙</div>
+        </div>
+ 
+        <p id="starProgress" class="star-progress" aria-live="polite">Stars found: 0 of 5</p>
+ 
+        <p id="starMessage" class="star-message" aria-live="polite">
+            Choose a star, little dreamer...
+        </p>
+    </section>
+ 
+    <section class="panel guestbook" id="guestbook">
+        <p class="hero-label">✦ NOTES FROM DREAMERS ✦</p>
+        <h2>Leave Pip a Little Note 💌</h2>
+ 
+        <p class="section-intro">
+            Send a kind thought to the Midnight Nursery.
+            Your note is saved in this browser, so it will still be here when you come back.
+        </p>
+ 
+        <form id="guestbookForm">
+            <label for="guestName">Your name</label>
+            <input
+                id="guestName"
+                name="guestName"
+                type="text"
+                maxlength="30"
+                placeholder="Little Dreamer"
+                required
+            >
+ 
+            <label for="guestMessage">Your message</label>
+            <textarea
+                id="guestMessage"
+                name="guestMessage"
+                maxlength="180"
+                placeholder="Dear Pip..."
+                rows="3"
+                required
+            ></textarea>
+ 
+            <button type="submit">Send a little love ✨</button>
+        </form>
+ 
+        <p id="guestbookStatus" aria-live="polite"></p>
+        <div id="guestbookEntries" class="guestbook-entries"></div>
+    </section>
+ 
+</main>
+ 
+<footer class="site-footer">
+    <p class="construction">🚧 This page is always under construction 🚧</p>
+ 
+    <p>
+        Your visits to the observatory:
+        <span class="counter" id="visitCount">000001</span>
+    </p>
+ 
+    <div class="badges" aria-hidden="true">
+        <span class="badge">Made in Notepad</span>
+        <span class="badge">Pastel Powered</span>
+        <span class="badge">100% Sleepy</span>
+        <span class="badge">No cookies, just stars</span>
     </div>
-</section>
-
-
-    </main>
-
-
-    <script src="script.js"></script>
+ 
+    <p>Best viewed in Chrome at 800×600 · © Pip 2026</p>
+ 
+    <p class="footer-hint">psst… poke the big title five times</p>
+ 
+    <p id="footerSurprise" class="footer-surprise" hidden>
+        🏅 SECRET CERTIFICATE: You woke the whole constellation.
+        Pip officially names you Honorary Night-Shift Dream Engineer.
+    </p>
+</footer>
+ 
+<script src="script.js"></script>
 </body>
 </html>
