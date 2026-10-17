@@ -9,11 +9,33 @@
 </head>
 <body>
 
-    <header>
-   <h1 id="secretTitle">Welcome to Pip's Midnight Observatory ✨</h1>
-<p id="secretMessage" hidden></p>
-        <p>A tiny dream engineer creating big dreams.</p>
-    </header>
+
+<header class="hero">
+    <p class="hero-label">✦ A LITTLE MAGIC AFTER DARK ✦</p>
+
+    <h1 id="secretTitle">
+        Welcome to Pip's
+        <span>Midnight Observatory</span>
+    </h1>
+
+    <p id="secretMessage" hidden></p>
+
+    <p class="hero-description">
+        Tiny dreams, sleepy stars, and little inventions
+        made with a whole lot of imagination.
+    </p>
+
+    <div class="hero-buttons">
+        <a class="hero-button primary-button" href="#projects">
+            ✨ Explore the Dream Workshop
+        </a>
+
+        <a class="hero-button secondary-button" href="#origin">
+            🌙 Discover Pip's Story
+        </a>
+    </div>
+</header>
+
 
     <main>
         <section>
@@ -39,7 +61,7 @@
 
         </section>
         
-<section class="projects">
+<section class="projects" id="projects">
     <h2>Pip's Dream Workshop</h2>
     <p class="section-intro">
         Three little inventions from the Midnight Nursery.
@@ -79,6 +101,76 @@
 
     </div>
 </section>
+
+
+<section class="constellation" id="constellation">
+    <p class="hero-label">✦ A SECRET HIDES IN EVERY STAR ✦</p>
+    <h2>Pip's Dream Constellation</h2>
+    <p class="section-intro">
+        Tap a star to discover a tiny message from the Midnight Nursery.
+    </p>
+
+    <div class="star-map" aria-label="Interactive dream stars">
+        <button class="dream-star star-one" data-message="🌙 Even the longest night ends with a sunrise.">
+            ✦
+        </button>
+        <button class="dream-star star-two" data-message="💗 You are someone's favourite kind of magic.">
+            ✧
+        </button>
+        <button class="dream-star star-three" data-message="✨ Small steps can lead to extraordinary dreams.">
+            ★
+        </button>
+        <button class="dream-star star-four" data-message="☁️ Rest is part of the adventure, little dreamer.">
+            ✦
+        </button>
+        <button class="dream-star star-five" data-message="🌟 Keep being curious. The universe loves questions.">
+            ✧
+        </button>
+        <div class="star-map-center">🌙</div>
+    </div>
+
+    <p id="starMessage" class="star-message" aria-live="polite">
+        Choose a star, little dreamer...
+    </p>
+</section>
+
+
+<section class="guestbook" id="guestbook">
+    <p class="hero-label">✦ NOTES FROM DREAMERS ✦</p>
+    <h2>Leave Pip a Little Note 💌</h2>
+
+    <p class="section-intro">
+        Send a kind thought to the Midnight Nursery.
+    </p>
+
+    <form id="guestbookForm">
+        <label for="guestName">Your name</label>
+        <input
+            id="guestName"
+            name="guestName"
+            type="text"
+            maxlength="30"
+            placeholder="Little Dreamer"
+            required
+        >
+
+        <label for="guestMessage">Your message</label>
+        <textarea
+            id="guestMessage"
+            name="guestMessage"
+            maxlength="180"
+            placeholder="Dear Pip..."
+            rows="3"
+            required
+        ></textarea>
+
+        <button type="submit">Send a little love ✨</button>
+    </form>
+
+    <p id="guestbookStatus" aria-live="polite"></p>
+    <div id="guestbookEntries" class="guestbook-entries"></div>
+</section>
+
 
 
 <section class="origin-story" id="origin">

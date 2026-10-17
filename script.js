@@ -78,3 +78,82 @@ secretTitle.addEventListener("click", function () {
     }
 });
 
+/* 4. Interactive dream constellation */
+const dreamStars = document.querySelectorAll(".dream-star");
+const starMessage = document.getElementById("starMessage");
+
+dreamStars.forEach(function (star) {
+    star.addEventListener("click", function () {
+        starMessage.textContent = star.dataset.message;
+    });
+});
+
+
+/* 5. Dream Guestbook */
+const guestbookForm = document.getElementById("guestbookForm");
+const guestName = document.getElementById("guestName");
+const guestMessage = document.getElementById("guestMessage");
+const guestbookEntries = document.getElementById("guestbookEntries");
+const guestbookStatus = document.getElementById("guestbookStatus");
+
+guestbookForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = guestName.value.trim();
+    const message = guestMessage.value.trim();
+
+    if (!name || !message) {
+        guestbookStatus.textContent = "Please fill in both fields.";
+        return;
+    }
+
+    const note = document.createElement("article");
+    note.className = "guest-note";
+
+    const title = document.createElement("h3");
+    title.textContent = "💌 From " + name;
+
+    const text = document.createElement("p");
+    text.textContent = message;
+
+    note.append(title, text);
+    guestbookEntries.prepend(note);
+
+    guestbookStatus.textContent = "Your little note reached Pip! ✨";
+    guestbookForm.reset();
+});
+
+/* 5. Dream Guestbook */
+const guestbookForm = document.getElementById("guestbookForm");
+const guestName = document.getElementById("guestName");
+const guestMessage = document.getElementById("guestMessage");
+const guestbookEntries = document.getElementById("guestbookEntries");
+const guestbookStatus = document.getElementById("guestbookStatus");
+
+guestbookForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = guestName.value.trim();
+    const message = guestMessage.value.trim();
+
+    if (!name || !message) {
+        guestbookStatus.textContent = "Please fill in both fields.";
+        return;
+    }
+
+    const note = document.createElement("article");
+    note.className = "guest-note";
+
+    const title = document.createElement("h3");
+    title.textContent = "💌 From " + name;
+
+    const text = document.createElement("p");
+    text.textContent = message;
+
+    note.append(title, text);
+    guestbookEntries.prepend(note);
+
+    guestbookStatus.textContent = "Your little note reached Pip! ✨";
+    guestbookForm.reset();
+});
+
