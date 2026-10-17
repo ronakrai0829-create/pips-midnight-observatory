@@ -617,6 +617,7 @@ if (
         addNote(note.name, note.text, false);
     });
  
+    
     guestbookForm.addEventListener("submit", function (event) {
         event.preventDefault();
  
