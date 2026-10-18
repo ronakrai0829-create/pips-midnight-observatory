@@ -79,6 +79,12 @@ a {
     outline-offset: 3px;
 }
 
+/* Keep the focus ring visible on dark backgrounds */
+body.night :focus-visible,
+.constellation :focus-visible {
+    outline-color: var(--butter);
+}
+
 .skip-link {
     position: absolute;
     top: -60px;
@@ -144,6 +150,8 @@ button:disabled {
 
 /* 4. Hero */
 .hero {
+    /* Keeps text readable in night mode (the hero stays light) */
+    color: var(--brown);
     padding: 70px 20px 60px;
     text-align: center;
     background:
@@ -178,10 +186,14 @@ button:disabled {
     font-size: clamp(2rem, 6vw, 3.5rem);
     line-height: 1.15;
     color: var(--berry);
+}
+
+/* The clickable title (the hidden Easter egg) */
+.secret-title {
     cursor: pointer;
 }
 
-.hero h1 span {
+.hero h1 .title-accent {
     display: block;
     font-family: Georgia, "Times New Roman", serif;
     font-style: italic;
@@ -254,6 +266,8 @@ main {
 }
 
 .panel {
+    /* Keeps text readable in night mode (panels stay light) */
+    color: var(--brown);
     margin-top: 38px;
     padding: 35px 22px;
     text-align: center;
@@ -558,10 +572,11 @@ main {
 .star-four { bottom: 12%; left: 22%; }
 .star-five { right: 15%; bottom: 15%; }
 
+/* Moved so the moon is no longer hidden behind the middle star */
 .star-map-center {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 36%;
+    left: 62%;
     transform: translate(-50%, -50%);
     font-size: 2rem;
     opacity: 0.85;
@@ -771,7 +786,72 @@ body.night .construction {
     to { transform: translateY(110vh) rotate(360deg); opacity: 0.8; }
 }
 
-/* 14. Small screens */
+/* 14. Pip's Lantern: night-mode firefly hunt (built by script.js) */
+.lantern-dark,
+.firefly,
+.lantern-hud {
+    display: none;
+}
+
+body.night .lantern-dark {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    /* Lower the 0.45 to 0.3 if you want the page even easier to read */
+    background: radial-gradient(
+        circle 170px at var(--lx, 50vw) var(--ly, 40vh),
+        rgba(255, 200, 120, 0.10) 0%,
+        rgba(8, 5, 25, 0) 55%,
+        rgba(8, 5, 25, 0.45) 100%
+    );
+}
+
+body.night .firefly {
+    display: block;
+    position: fixed;
+    z-index: 60;
+    font-size: 1.6rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.25s;
+    user-select: none;
+}
+
+body.night .firefly.lit {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px #ffb347);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    body.night .firefly.lit {
+        animation: fireflyBob 1.2s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes fireflyBob {
+    to { transform: translateY(-8px); }
+}
+
+body.night .lantern-hud {
+    display: block;
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 60;
+    margin: 0;
+    padding: 0.4rem 0.8rem;
+    max-width: 90vw;
+    color: #ffd9a0;
+    background: #2b1b12;
+    border: 2px solid #ffb347;
+    border-radius: 8px;
+    font-family: var(--font-pixel);
+    font-size: 1.2rem;
+}
+
+/* 15. Small screens */
 @media (max-width: 750px) {
     .project-grid {
         grid-template-columns: 1fr;
@@ -814,7 +894,7 @@ body.night .construction {
     }
 }
 
-/* 15. Respect people who prefer less motion */
+/* 16. Respect people who prefer less motion */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
