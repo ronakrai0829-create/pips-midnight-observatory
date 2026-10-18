@@ -8,7 +8,6 @@ const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
 ).matches;
 
-// localStorage can be blocked (private mode, strict settings), so never trust it.
 function safeGet(key) {
     try {
         return localStorage.getItem(key);
@@ -21,7 +20,7 @@ function safeSet(key, value) {
     try {
         localStorage.setItem(key, value);
     } catch (error) {
-        /* storage blocked: the page still works, it just won't remember */
+       
     }
 }
 
@@ -428,9 +427,8 @@ if (secretTitle && secretMessage) {
     secretTitle.addEventListener("click", unlockSecret);
 
     // Keyboard accessibility.
-    secretTitle.setAttribute("tabindex", "0");
-    secretTitle.setAttribute("role", "button");
-
+    // (role="button" and tabindex="0" now live on the <span> in index.html,
+    // so the <h1> keeps its heading meaning for screen readers.)
     secretTitle.addEventListener("keydown", function (event) {
         if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
@@ -641,3 +639,102 @@ if (
         guestbookForm.reset();
     });
 }
+
+
+/* ========================================
+   11. PIP'S LANTERN (night-mode firefly hunt)
+   Turn on the nightlight, then move your mouse:
+   the page dims except for a glow around the cursor,
+   and hidden fireflies only show up inside the glow.
+======================================== */
+
+(function () {
+    // Mouse devices only. Phones and tablets just keep the normal night mode.
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const TOTAL = 5;
+    const GLOW_RADIUS = 130;
+
+    // The dark overlay with a glowing hole that follows the cursor.
+    const dark = document.createElement("div");
+    dark.className = "lantern-dark";
+    dark.setAttribute("aria-hidden", "true");
+    document.body.append(dark);
+
+    // The little scoreboard (only shown in night mode, see style.css).
+    const hud = document.createElement("p");
+    hud.className = "lantern-hud";
+    hud.setAttribute("aria-live", "polite");
+    document.body.append(hud);
+
+    let caught = 0;
+    let flies = [];
+
+    function paintHud(text) {
+        hud.textContent =
+            text ||
+            "🏮 Fireflies caught: " + caught + " of " + TOTAL +
+            " · move your lantern to find them";
+    }
+
+    function spawnFlies() {
+        flies.forEach(function (fly) {
+            fly.remove();
+        });
+        flies = [];
+        caught = 0;
+        paintHud();
+
+        for (let i = 0; i < TOTAL; i++) {
+            const fly = document.createElement("div");
+            fly.className = "firefly";
+            // Decorative mini-game for mouse users, so it is hidden from screen readers.
+            fly.setAttribute("aria-hidden", "true");
+            fly.textContent = "✨";
+            fly.style.left = 6 + Math.random() * 86 + "vw";
+            fly.style.top = 12 + Math.random() * 74 + "vh";
+
+            fly.addEventListener("click", function () {
+                if (!document.body.classList.contains("night")) return;
+
+                fly.remove();
+                flies = flies.filter(function (other) {
+                    return other !== fly;
+                });
+
+                playNote(caught);
+                caught += 1;
+
+                if (caught === TOTAL) {
+                    paintHud("🏮 You caught every firefly! Pip's Lantern Badge is yours.");
+                    playChime();
+                    confetti(["✨", "🏮", "🌙", "⭐"], 30);
+                    // Start a fresh hunt after a few seconds.
+                    setTimeout(spawnFlies, 5000);
+                } else {
+                    paintHud();
+                }
+            });
+
+            document.body.append(fly);
+            flies.push(fly);
+        }
+    }
+
+    document.addEventListener("pointermove", function (event) {
+        if (!document.body.classList.contains("night")) return;
+
+        dark.style.setProperty("--lx", event.clientX + "px");
+        dark.style.setProperty("--ly", event.clientY + "px");
+
+        // A firefly is only visible while it is inside the glow.
+        flies.forEach(function (fly) {
+            const box = fly.getBoundingClientRect();
+            const dx = event.clientX - (box.left + box.width / 2);
+            const dy = event.clientY - (box.top + box.height / 2);
+            fly.classList.toggle("lit", Math.hypot(dx, dy) < GLOW_RADIUS);
+        });
+    });
+
+    spawnFlies();
+})();
