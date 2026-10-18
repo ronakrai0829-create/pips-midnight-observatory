@@ -24,7 +24,8 @@ function safeSet(key, value) {
     }
 }
 
-// Pick a random item, never the same one twice in a row.
+// Pick a random index, never the same one twice in a row.
+// Works with arrays and NodeLists.
 function pickRandom(list, lastIndex) {
     let index = Math.floor(Math.random() * list.length);
     if (list.length > 1 && index === lastIndex) {
@@ -51,6 +52,30 @@ function confetti(symbols, count) {
             piece.remove();
         }, 5500);
     }
+}
+
+// A small pop-up message at the bottom of the screen.
+let toastTimer = null;
+
+function showToast(text) {
+    let toast = document.getElementById("toast");
+
+    if (!toast) {
+        toast = document.createElement("p");
+        toast.id = "toast";
+        toast.className = "toast";
+        toast.setAttribute("role", "status");
+        toast.setAttribute("aria-live", "polite");
+        document.body.append(toast);
+    }
+
+    toast.textContent = text;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+        toast.classList.remove("show");
+    }, 4500);
 }
 
 
@@ -198,7 +223,31 @@ if (visitCount) {
 
 
 /* ========================================
-   4. DREAM DELIVERY + DREAM BUTTON
+   3b. TIME-OF-DAY GREETING
+======================================== */
+
+const greeting = document.getElementById("greeting");
+
+if (greeting) {
+    const hour = new Date().getHours();
+    let greetingText;
+
+    if (hour < 5 || hour >= 22) {
+        greetingText = "🌙 It's the middle of the night. Perfect time for a visit! Try the nightlight in the workshop.";
+    } else if (hour < 12) {
+        greetingText = "☀️ Good morning! Pip is just heading to bed, but the observatory is open.";
+    } else if (hour < 18) {
+        greetingText = "🌤️ Good afternoon! Pip is napping on a cloud, so tiptoe in.";
+    } else {
+        greetingText = "🌆 Good evening! The stars are just waking up.";
+    }
+
+    greeting.textContent = greetingText;
+}
+
+
+/* ========================================
+   4. DREAM BUTTON + DREAM DELIVERY (rooftop route toy)
 ======================================== */
 
 const dreams = [
@@ -231,10 +280,85 @@ if (dreamButton && message) {
 
 const deliveryButton = document.getElementById("deliveryButton");
 const deliveryOutput = document.getElementById("deliveryOutput");
+const deliveryRoutes = document.querySelectorAll(".delivery-scene .route");
+const deliveryHouses = document.querySelectorAll(".delivery-scene .house");
+const envelope = document.getElementById("envelope");
+
+let lastHouse = -1;
+let delivering = false;
+
+// Slides the envelope along an SVG path, then calls onDone.
+function flyEnvelope(path, onDone) {
+    if (reduceMotion || !envelope || !path.getTotalLength) {
+        onDone();
+        return;
+    }
+
+    const length = path.getTotalLength();
+    const duration = 1400;
+    const startTime = performance.now();
+
+    envelope.style.opacity = "1";
+
+    function step(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const point = path.getPointAtLength(length * progress);
+
+        envelope.setAttribute("x", point.x);
+        envelope.setAttribute("y", point.y);
+
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else {
+            envelope.style.opacity = "0";
+            onDone();
+        }
+    }
+
+    requestAnimationFrame(step);
+}
 
 if (deliveryButton && deliveryOutput) {
     deliveryButton.addEventListener("click", function () {
-        deliveryOutput.textContent = "📬 Delivered: " + nextDream();
+        if (delivering) return;
+
+        const dream = nextDream();
+
+        // If the little map is missing, fall back to a plain message.
+        if (!deliveryRoutes.length || !deliveryHouses.length) {
+            deliveryOutput.textContent = "📬 Delivered: " + dream;
+            return;
+        }
+
+        delivering = true;
+        deliveryButton.disabled = true;
+
+        const houseIndex = pickRandom(deliveryHouses, lastHouse);
+        lastHouse = houseIndex;
+
+        deliveryRoutes.forEach(function (route) {
+            route.classList.remove("active");
+        });
+        deliveryHouses.forEach(function (house) {
+            house.querySelector(".window").classList.remove("lit");
+        });
+
+        deliveryRoutes[houseIndex].classList.add("active");
+        deliveryOutput.textContent =
+            "📬 Pip is flying your dream across the rooftops...";
+
+        flyEnvelope(deliveryRoutes[houseIndex], function () {
+            const house = deliveryHouses[houseIndex];
+            house.querySelector(".window").classList.add("lit");
+
+            playNote(houseIndex + 1);
+
+            deliveryOutput.textContent =
+                "📬 Delivered to " + house.dataset.name + ": " + dream;
+
+            deliveryButton.disabled = false;
+            delivering = false;
+        });
     });
 }
 
@@ -245,34 +369,34 @@ if (deliveryButton && deliveryOutput) {
 
 const storyScenes = [
     {
-        icon: "🌧️",
+        icon: "🌠",
         bg: "#e8ecf8",
-        title: "The Sleepless Night",
-        text: "Once upon a midnight, Pip noticed that the little stars couldn't help everyone sleep. Something magical was missing.",
+        title: "The Fallen Star",
+        text: "One midnight, a tired little star slipped off the sky and landed on the observatory roof. It was still warm, and it hummed one very quiet note. Pip had never met a star that needed a nap.",
         object: {
             emoji: "⭐",
             label: "a fallen star",
             prompt: "Tap the glowing ⭐ to see what Pip found.",
-            reveal: "You found a fallen star! It's still warm, and it hums a very quiet tune."
+            reveal: "You found the fallen star! It's warm, and it hums one soft note."
         }
     },
     {
-        icon: "💡",
+        icon: "🔭",
         bg: "#fff3d6",
-        title: "A Little Spark",
-        text: "Pip built a tiny dream lantern, mixed it with gentle lullabies, and discovered that even the smallest light could bring comfort.",
+        title: "The Telescope Lantern",
+        text: "Pip didn't know how to fix a star, so Pip built a telescope with a lantern inside. Through it, every sleepy dream in town looked like a tiny glowing dot.",
         object: {
-            emoji: "🎼",
-            label: "a lullaby",
-            prompt: "Tap the glowing 🎼 to hear what went into the lantern.",
-            reveal: "Pip tucked the lullaby inside the lantern, and the glow got softer."
+            emoji: "🏮",
+            label: "a lantern",
+            prompt: "Tap the glowing 🏮 to light the telescope.",
+            reveal: "The lantern flickers on, and a thousand little dream-dots appear in the lens."
         }
     },
     {
         icon: "🌙",
         bg: "#f7dce5",
         title: "The Dream Engineer",
-        text: "And so Pip joined the Midnight Nursery, delivering cozy dreams, designing nightlights, and helping sleepy minds find their happy place.",
+        text: "The star rested, healed, and lit the sky again. Pip joined the Midnight Nursery, mapping dreams into constellations and delivering them to sleepy rooftops all over town.",
         object: {
             emoji: "📬",
             label: "a letter",
@@ -356,10 +480,12 @@ if (
         }
 
         // With a clue on screen, the next button unlocks once it is found.
-        storyButton.disabled = storyObject ? !found : false;
+        const locked = storyObject ? !found : false;
+        storyButton.disabled = locked;
 
-        storyButton.textContent =
-            index === lastScene
+        storyButton.textContent = locked
+            ? "🔒 Find the glowing clue first"
+            : index === lastScene
                 ? "Read the story again ↻"
                 : "Discover what happened →";
     }
@@ -376,6 +502,10 @@ if (
                 storyHint.textContent = scene.object.reveal;
             }
             storyButton.disabled = false;
+            storyButton.textContent =
+                currentScene === lastScene
+                    ? "Read the story again ↻"
+                    : "Discover what happened →";
 
             playNote(currentScene + 1);
 
@@ -399,7 +529,9 @@ if (
 
 
 /* ========================================
-   6. HIDDEN EASTER EGG (poke the title 5 times)
+   6. HIDDEN EASTER EGGS
+   #1: poke the title 5 times
+   #2: the classic arrow-key code
 ======================================== */
 
 const secretTitle = document.getElementById("secretTitle");
@@ -427,7 +559,7 @@ if (secretTitle && secretMessage) {
     secretTitle.addEventListener("click", unlockSecret);
 
     // Keyboard accessibility.
-    // (role="button" and tabindex="0" now live on the <span> in index.html,
+    // (role="button" and tabindex="0" live on the <span> in index.html,
     // so the <h1> keeps its heading meaning for screen readers.)
     secretTitle.addEventListener("keydown", function (event) {
         if (event.key === "Enter" || event.key === " ") {
@@ -436,6 +568,34 @@ if (secretTitle && secretMessage) {
         }
     });
 }
+
+// Secret #2: up, up, down, down, left, right, left, right, B, A
+const KONAMI = [
+    "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+    "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+    "b", "a"
+];
+let konamiIndex = 0;
+
+document.addEventListener("keydown", function (event) {
+    // Don't listen while someone is typing in the guestbook.
+    if (event.target.matches && event.target.matches("input, textarea")) return;
+
+    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+
+    if (key === KONAMI[konamiIndex]) {
+        konamiIndex += 1;
+
+        if (konamiIndex === KONAMI.length) {
+            konamiIndex = 0;
+            playChime();
+            confetti(["🌠", "⭐", "✨", "☄️"], 50);
+            showToast("🌠 A shower of shooting stars! Pip saw you do that.");
+        }
+    } else {
+        konamiIndex = key === KONAMI[0] ? 1 : 0;
+    }
+});
 
 
 /* ========================================
