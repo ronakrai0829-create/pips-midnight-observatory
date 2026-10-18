@@ -188,7 +188,7 @@ button:disabled {
     color: var(--berry);
 }
 
-/* The clickable title (the hidden Easter egg) */
+/* The clickable title (the first hidden Easter egg) */
 .secret-title {
     cursor: pointer;
 }
@@ -296,6 +296,15 @@ main {
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
+}
+
+.greeting {
+    max-width: 520px;
+    margin: 0 auto 10px;
+    font-family: var(--font-pixel);
+    font-size: 1.4rem;
+    line-height: 1.3;
+    color: var(--berry);
 }
 
 #message {
@@ -482,6 +491,62 @@ main {
     background: var(--pink);
     border: 2px outset var(--rose);
     border-radius: 4px;
+}
+
+/* Dream Delivery: the little rooftop map */
+.delivery-scene {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 2px 0 12px;
+    background: #2b2140;
+    border: 2px solid var(--rose);
+    border-radius: 6px;
+}
+
+.delivery-scene .route {
+    fill: none;
+    stroke: rgba(255, 240, 184, 0.22);
+    stroke-width: 1.2;
+    stroke-dasharray: 3 3;
+}
+
+.delivery-scene .route.active {
+    stroke: var(--butter);
+}
+
+.delivery-scene .ground {
+    fill: #1b142b;
+}
+
+.delivery-scene .tower rect {
+    fill: #6b5a8a;
+}
+
+.delivery-scene .tower polygon {
+    fill: var(--berry);
+}
+
+.delivery-scene .house-body {
+    fill: #4a3a6b;
+}
+
+.delivery-scene .house-roof {
+    fill: var(--berry);
+}
+
+.delivery-scene .window {
+    fill: #6b5a8a;
+    transition: fill 0.3s ease;
+}
+
+.delivery-scene .window.lit {
+    fill: #ffd44d;
+    filter: drop-shadow(0 0 4px #ffd44d);
+}
+
+.delivery-scene .envelope {
+    opacity: 0;
 }
 
 /* 10. Constellation */
@@ -742,6 +807,7 @@ body.night .construction {
     color: var(--brown);
     background: var(--pink);
     border: 2px outset var(--rose);
+    transition: transform 0.15s ease;
 }
 
 .footer-hint {
@@ -784,6 +850,32 @@ body.night .construction {
 
 @keyframes confettiFall {
     to { transform: translateY(110vh) rotate(360deg); opacity: 0.8; }
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 70px;
+    z-index: 1001;
+    max-width: min(420px, 90vw);
+    padding: 10px 16px;
+    text-align: center;
+    color: var(--brown);
+    background: var(--butter);
+    border: 3px double var(--berry);
+    border-radius: 6px;
+    font-family: var(--font-pixel);
+    font-size: 1.3rem;
+    line-height: 1.2;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 16px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
 }
 
 /* 14. Pip's Lantern: night-mode firefly hunt (built by script.js) */
@@ -851,7 +943,33 @@ body.night .lantern-hud {
     font-size: 1.2rem;
 }
 
-/* 15. Small screens */
+/* 15. Chaos mode: a little wobble in everything */
+.badge:hover {
+    transform: rotate(-6deg) scale(1.1);
+}
+
+.project-icon {
+    animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+    0%, 90%, 100% { transform: rotate(0); }
+    93% { transform: rotate(-8deg); }
+    96% { transform: rotate(8deg); }
+}
+
+/* Slightly crooked panels, tablet and desktop only */
+@media (min-width: 601px) {
+    .panel:nth-of-type(odd) {
+        transform: rotate(-0.4deg);
+    }
+
+    .panel:nth-of-type(even) {
+        transform: rotate(0.4deg);
+    }
+}
+
+/* 16. Small screens */
 @media (max-width: 750px) {
     .project-grid {
         grid-template-columns: 1fr;
@@ -894,7 +1012,7 @@ body.night .lantern-hud {
     }
 }
 
-/* 16. Respect people who prefer less motion */
+/* 17. Respect people who prefer less motion */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -909,12 +1027,16 @@ body.night .lantern-hud {
     .pip-image,
     .dream-star,
     .story-object,
+    .project-icon,
     #secretMessage {
         animation: none;
     }
 
     .story-scene,
-    .star-lines {
+    .star-lines,
+    .badge,
+    .toast,
+    .delivery-scene .window {
         transition: none;
     }
 }
