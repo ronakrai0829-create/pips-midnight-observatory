@@ -1,79 +1,63 @@
-# Pip's Midnight Observatory 🌙
+# 🌙 Pip's Midnight Observatory
 
-A character portfolio website for **haX.baby: Baby's First Website**.
+A cozy, 1999-style website for **Pip, the Skull Baby**: a sleepy Junior Dream Engineer at the Midnight Nursery who turns sleepy thoughts into dreams, lullabies and nightlights.
 
-Pip is a gentle, sleepy baby Dream Engineer who lives in the Midnight Nursery
-and turns sleepy thoughts into magical dreams.
+Built solo for the **haX.baby "Baby's First Website" hackathon** (17-19 October 2026), **Track 1: Pip, The Skull Baby**.
 
-**🔗 Live site:** https://ronakrai0829-create.github.io/pips-midnight-observatory/
+**Live site:** https://ronakrai0829-create.github.io/pips-midnight-observatory/
+<!-- Update the link above if your GitHub Pages address is different -->
 
-<!-- Add a screenshot: put an image in the images/ folder, then uncomment the line below -->
-<!-- ![Pip's Midnight Observatory](images/screenshot.png) -->
+<!-- Add a screenshot here, for example: ![Pip's Midnight Observatory](docs/screenshot.png) -->
 
-## About Pip
+## The three questions
 
-Pip is a Junior Dream Engineer at the Midnight Nursery. Pip builds tiny
-inventions that help sleepy minds find their happy place. This site is Pip's
-little corner of the early web: pastel colors, a scrolling ticker, a hit
-counter, and a few secrets.
+| Question | Where to find it |
+|---|---|
+| **What is Pip?** | The hero and "Hey, I'm Pip!" section: a sleepy baby Dream Engineer with a night-shift personality |
+| **What does Pip do?** | **Pip's Dream Workshop**: Lullaby Lab, Nightlight Constellations and Dream Delivery, three working inventions |
+| **What is Pip's story?** | **How Pip Became a Dream Engineer**: a 3-chapter interactive story, one glowing clue per chapter |
 
-## What's inside
+## Features
 
-- **Meet Pip:** character intro and a button that delivers a random dream
-- **Origin story:** three chapters. Find the glowing object in each one to keep reading
-- **Dream Workshop:** three projects that actually work
-  - 🎵 **Lullaby Lab:** a five-key music box (try the keys left to right)
-  - 🌙 **Nightlight Constellations:** turns the whole site into night
-  - 📬 **Dream Delivery:** delivers a random dream
-- **Dream Constellation:** five stars with notes and messages. Find them all to complete the constellation
-- **Guestbook:** leave Pip a note. Notes are saved in your browser
-- **One hidden Easter egg:** a hint is in the footer
+**Interactive toys**
+- 🎵 **Lullaby Lab:** a 5-key music box built with the Web Audio API (no audio files). Play the keys left to right for a surprise.
+- 🌙 **Nightlight + Pip's Lantern:** turns the page to night. On computers, the cursor becomes a lantern that reveals five hidden fireflies to catch.
+- 📬 **Dream Delivery:** an animated rooftop route. Pip's envelope flies along an SVG path to a random house and lights its window.
+- ⭐ **Dream Constellation:** five tappable stars, each with its own note and message. Find them all to draw the constellation.
+- 💌 **Guestbook:** saved in the visitor's own browser.
 
-## Early-web touches
+**Early-web soul**
+- Scrolling ticker, blinking "NEW!" badge, ridge borders, pixel fonts, a star cursor
+- Sparkle cursor trail
+- Retro visit counter (counts per browser)
+- 88x31-style badges that tilt on hover, slightly crooked panels, wiggling icons
 
-- Scrolling ticker and blinking "NEW!" badge
-- Visit counter (counts your own visits in this browser)
-- 88×31-style badges and an "under construction" footer
-- Beveled buttons, ridge borders, pixel headings and a star cursor
-- Sparkle trail that follows your mouse (desktop only)
-- Click sounds with a mute button, generated with the Web Audio API (no audio files)
+**Details**
+- Click sounds on every button, with a mute toggle that remembers your choice
+- A greeting that changes with the time of day
+- Fully responsive (tested at phone, tablet and desktop widths)
+- Respects `prefers-reduced-motion`, keyboard accessible, visible focus rings, skip link
+
+## Hidden secrets 🤫
+
+There are two Easter eggs, plus a few small surprises:
+1. Poke the big title five times.
+2. Try the classic arrow-key cheat code (↑ ↑ ↓ ↓ ← → ← → B A).
+3. Finish the constellation and check the footer.
 
 ## Built with
 
-- HTML
-- CSS
-- Vanilla JavaScript (no frameworks, no backend)
-- Hosted on GitHub Pages
-
-## Accessibility and mobile
-
-- Responsive layout for phone and desktop
-- Keyboard-friendly, including the Easter egg
-- Skip link, labeled star buttons and live regions for messages
-- Respects `prefers-reduced-motion`: the ticker, sparkles, confetti and animations switch off
+Plain **HTML, CSS and JavaScript**. No frameworks and no build step. Fonts: VT323 (Google Fonts). Sounds are generated live with the Web Audio API.
 
 ## Run it locally
-
-1. Download or clone this repo
-2. Open `index.html` in your browser
 
 ```bash
 git clone https://github.com/ronakrai0829-create/pips-midnight-observatory.git
 cd pips-midnight-observatory
+# open index.html in your browser, or use VS Code's Live Server
 ```
 
-## Project structure
+## Credits
 
-```
-index.html   page structure
-style.css    all styling
-script.js    all interactions
-images/      Pip's artwork
-```
-
-## Notes
-
-- Guestbook notes and the visit counter use `localStorage`, so each visitor only sees their own.
-- The two starter guestbook notes are from made-up characters.
-
-Made with ♥ for haX.baby, by Ronak.
+- Pip character and avatar art: official haX.baby asset pack
+- Everything else (code, copy, sounds, layout): made during the 48-hour sprint
